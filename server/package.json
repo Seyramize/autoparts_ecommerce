@@ -1,5 +1,5 @@
 {
-  "name": "AutoParts",
+  "name": "autoparts",
   "version": "1.0.0",
   "description": "A reliable ecommerce spare parts platform",
   "main": "app.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hasan-py/MERN_Stack_Project_Hayroo_Ecommerce"
+    "url": "https://github.com/Seyramize/autoparts_ecommerce"
   },
   "author": "Sarxt Tech | https://saysey.netlify.app",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hasan-py/MERN_Stack_Project_Hayroo_Ecommerce/issues"
+    "url": "https://github.com/Seyramize/autoparts_ecommerce/issues"
   },
-  "homepage": "https://github.com/hasan-py/MERN_Stack_Project_Hayroo_Ecommerce#readme",
+  "homepage": "",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "braintree": "^3.0.0",
