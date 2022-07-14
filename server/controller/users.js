@@ -1,13 +1,13 @@
-const userModel = require("../models/users");
-const bcrypt = require("bcryptjs");
+const userModel = require('../models/users');
+const bcrypt = require('bcryptjs');
 
 class User {
   async getAllUser(req, res) {
     try {
       let Users = await userModel
         .find({})
-        .populate("allProduct.id", "pName pImages pPrice")
-        .populate("user", "name email")
+        .populate('allProduct.id', 'pName pImages pPrice')
+        .populate('user', 'name email')
         .sort({ _id: -1 });
       if (Users) {
         return res.json({ Users });
@@ -20,12 +20,12 @@ class User {
   async getSingleUser(req, res) {
     let { uId } = req.body;
     if (!uId) {
-      return res.json({ error: "All filled must be required" });
+      return res.json({ error: 'All fields must be required' });
     } else {
       try {
         let User = await userModel
           .findById(uId)
-          .select("name email phoneNumber userImage updatedAt createdAt");
+          .select('name email phoneNumber userImage updatedAt createdAt');
         if (User) {
           return res.json({ User });
         }
@@ -45,7 +45,7 @@ class User {
       !address ||
       !phone
     ) {
-      return res.json({ message: "All filled must be required" });
+      return res.json({ message: 'All filled must be required' });
     } else {
       try {
         let newUser = new userModel({
@@ -58,7 +58,7 @@ class User {
         });
         let save = await newUser.save();
         if (save) {
-          return res.json({ success: "User created successfully" });
+          return res.json({ success: 'User created successfully' });
         }
       } catch (err) {
         return res.json({ error: error });
@@ -69,7 +69,7 @@ class User {
   async postEditUser(req, res) {
     let { uId, name, phoneNumber } = req.body;
     if (!uId || !name || !phoneNumber) {
-      return res.json({ message: "All filled must be required" });
+      return res.json({ message: 'All filled must be required' });
     } else {
       let currentUser = userModel.findByIdAndUpdate(uId, {
         name: name,
@@ -78,7 +78,7 @@ class User {
       });
       currentUser.exec((err, result) => {
         if (err) console.log(err);
-        return res.json({ success: "User updated successfully" });
+        return res.json({ success: 'User updated successfully' });
       });
     }
   }
@@ -86,7 +86,7 @@ class User {
   async getDeleteUser(req, res) {
     let { oId, status } = req.body;
     if (!oId || !status) {
-      return res.json({ message: "All filled must be required" });
+      return res.json({ message: 'All filled must be required' });
     } else {
       let currentUser = userModel.findByIdAndUpdate(oId, {
         status: status,
@@ -94,7 +94,7 @@ class User {
       });
       currentUser.exec((err, result) => {
         if (err) console.log(err);
-        return res.json({ success: "User updated successfully" });
+        return res.json({ success: 'User updated successfully' });
       });
     }
   }
@@ -102,12 +102,12 @@ class User {
   async changePassword(req, res) {
     let { uId, oldPassword, newPassword } = req.body;
     if (!uId || !oldPassword || !newPassword) {
-      return res.json({ message: "All filled must be required" });
+      return res.json({ message: 'All filled must be required' });
     } else {
       const data = await userModel.findOne({ _id: uId });
       if (!data) {
         return res.json({
-          error: "Invalid user",
+          error: 'Invalid user',
         });
       } else {
         const oldPassCheck = await bcrypt.compare(oldPassword, data.password);
@@ -118,11 +118,11 @@ class User {
           });
           passChange.exec((err, result) => {
             if (err) console.log(err);
-            return res.json({ success: "Password updated successfully" });
+            return res.json({ success: 'Password updated successfully' });
           });
         } else {
           return res.json({
-            error: "Your old password is wrong!!",
+            error: 'Your old password is incorrect!!',
           });
         }
       }

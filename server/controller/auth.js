@@ -31,10 +31,10 @@ class Auth {
     if (!name || !email || !password || !cPassword) {
       error = {
         ...error,
-        name: 'Filed must not be empty',
-        email: 'Filed must not be empty',
-        password: 'Filed must not be empty',
-        cPassword: 'Filed must not be empty',
+        name: 'Field must not be empty',
+        email: 'Field must not be empty',
+        password: 'Field must not be empty',
+        cPassword: 'Field must not be empty',
       };
       return res.json({ error });
     }
@@ -47,7 +47,7 @@ class Auth {
         if ((password.length > 255) | (password.length < 8)) {
           error = {
             ...error,
-            password: 'Password must be at least 8 character',
+            password: 'Password must be at least 8 characters',
             name: '',
             email: '',
           };
