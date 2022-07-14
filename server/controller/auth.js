@@ -1,8 +1,8 @@
-const { toTitleCase, validateEmail } = require('../config/function');
-const bcrypt = require('bcryptjs');
-const userModel = require('../models/users');
-const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('../config/keys');
+const { toTitleCase, validateEmail } = require("../config/function");
+const bcrypt = require("bcryptjs");
+const userModel = require("../models/users");
+const jwt = require("jsonwebtoken");
+const { JWT_SECRET } = require("../config/keys");
 
 class Auth {
   async isAdmin(req, res) {
@@ -31,15 +31,15 @@ class Auth {
     if (!name || !email || !password || !cPassword) {
       error = {
         ...error,
-        name: 'Field must not be empty',
-        email: 'Field must not be empty',
-        password: 'Field must not be empty',
-        cPassword: 'Field must not be empty',
+        name: "Field must not be empty",
+        email: "Field must not be empty",
+        password: "Field must not be empty",
+        cPassword: "Field must not be empty",
       };
       return res.json({ error });
     }
     if (name.length < 3 || name.length > 25) {
-      error = { ...error, name: 'Name must be 3-25 charecter' };
+      error = { ...error, name: "Name must be 3-25 charecter" };
       return res.json({ error });
     } else {
       if (validateEmail(email)) {
@@ -47,9 +47,9 @@ class Auth {
         if ((password.length > 255) | (password.length < 8)) {
           error = {
             ...error,
-            password: 'Password must be at least 8 characters',
-            name: '',
-            email: '',
+            password: "Password must be at least 8 characters",
+            name: "",
+            email: "",
           };
           return res.json({ error });
         } else {
@@ -60,9 +60,9 @@ class Auth {
             if (data) {
               error = {
                 ...error,
-                password: '',
-                name: '',
-                email: 'Email already exists',
+                password: "",
+                name: "",
+                email: "Email already exists",
               };
               return res.json({ error });
             } else {
@@ -71,13 +71,13 @@ class Auth {
                 email,
                 password,
                 // ========= Here role 1 for admin signup role 0 for customer signup =========
-                userRole: 1, // Field Name change to userRole from role
+                userRole: 0, // Field Name change to userRole from role
               });
               newUser
                 .save()
                 .then((data) => {
                   return res.json({
-                    success: 'Account created successfully. Please Login',
+                    success: "Account created successfully. Please Login",
                   });
                 })
                 .catch((err) => {
@@ -91,9 +91,9 @@ class Auth {
       } else {
         error = {
           ...error,
-          password: '',
-          name: '',
-          email: 'Email is not valid',
+          password: "",
+          name: "",
+          email: "Email is not valid",
         };
         return res.json({ error });
       }
@@ -105,14 +105,14 @@ class Auth {
     let { email, password } = req.body;
     if (!email || !password) {
       return res.json({
-        error: 'Fields must not be empty',
+        error: "Fields must not be empty",
       });
     }
     try {
       const data = await userModel.findOne({ email: email });
       if (!data) {
         return res.json({
-          error: 'Invalid email or password',
+          error: "Invalid email or password",
         });
       } else {
         const login = await bcrypt.compare(password, data.password);
@@ -128,7 +128,7 @@ class Auth {
           });
         } else {
           return res.json({
-            error: 'Invalid email or password',
+            error: "Invalid email or password",
           });
         }
       }
